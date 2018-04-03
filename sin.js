@@ -1,5 +1,6 @@
 "use strict"
 
+/*
 function Sin (x, y, parentElement) {
   var self = this;
 
@@ -9,15 +10,15 @@ function Sin (x, y, parentElement) {
 
 }
 
-Sin.prototype.updatePosition () {
+Sin.prototype.updatePosition = function () {
 
 }
 
 
-Sin.prototype.draw () {
+Sin.prototype.draw = function () {
 
 }
 
 
 
-//Need to set borders for where the sins can travel to
+*/

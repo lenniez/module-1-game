@@ -1,5 +1,6 @@
 "use strict"
 
+/*
 function Pardon (x, y, parentElement) {
   var self = this;
 
@@ -9,15 +10,15 @@ function Pardon (x, y, parentElement) {
 
 }
 
-Pardon.prototype.updatePosition () {
+Pardon.prototype.updatePosition = function () {
 
 }
 
 
-Pardon.prototype.draw () {
+Pardon.prototype.draw = function () {
 
 }
 
 
 
-//Need to set borders for where the pardons can travel to
+*/

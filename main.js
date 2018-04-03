@@ -1,14 +1,9 @@
 "use strict"
 
-function createHtml(html) {
-  var div = document.createElement("div");
-  div.innerHTML = html;
-  return div.children[0];
-}
-
 function main() {
   var game;
-  var mainContentElement = document.getElementsByClassName("main-content");
+  var player;
+  var mainContentElement = document.getElementsByClassName("main-content")[0];
 
   // -- SPLASH SCREEN
 
@@ -32,7 +27,7 @@ function main() {
       </div>
     </div>`);
 
-    mainContentElement[0].appendChild(splashScreenElement);
+    mainContentElement.appendChild(splashScreenElement);
 
     startButtonElement = splashScreenElement.querySelector('#destiny');
 
@@ -51,36 +46,18 @@ function main() {
 
   // build game screen
 
-  var gameScreenElement;
-
-  function buildGameScreen() {
-    gameScreenElement = createHtml(`
-    <div>
-      <p id = "pardons">pardons remaining:</p>
-      <div id= "game">
-      <h2 id="birth">birth</h2>
-      <div>
-        <!-- INSERT GAME CONTENTS HERE -->
-      </div>
-      <h2 id="death">death</h2>
-    </div>
-
-    <div class = "sins-text">
-      <p id = "sins-footer">anger - sloth - greed - pride - lust - envy - wrath - gluttony</p>
-    </div>
-    </div>`);
-
-    mainContentElement[0].appendChild(gameScreenElement);
+  function buildGameScreen () {
+    game = new Game(mainContentElement);
+    game.build();
+    
     /*
-      game = new Game(mainContentElement);
-      game.build();
       game.start();
       game.onEnded(function() {
         gameEnded();
       });
     */
 
-      setTimeout(gameEnded, 3000); //REMOVE THIS ONCE GAME CONSTRUCTOR EXISTS AND GAME END FUNCTION EXISTS
+     // setTimeout(gameEnded, 3000); //REMOVE THIS ONCE GAME CONSTRUCTOR EXISTS AND GAME END FUNCTION EXISTS
   }
 
   function gameEnded() {
@@ -109,7 +86,7 @@ function main() {
         -->
       </div>`);
 
-    mainContentElement[0].appendChild(gameOverScreenElement);
+    mainContentElement.appendChild(gameOverScreenElement);
 
     resetButtonElement = gameOverScreenElement.querySelector(".reset");
 

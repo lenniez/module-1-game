@@ -40,6 +40,7 @@ h2 {
 .sins-text {
   font-family: 'Rozha One', serif;
   font-size: calc(1.25rem + ((1vw - 3.2px) * 0.3125));
+  position: relative;
 }
 
 #destiny {
@@ -72,7 +73,11 @@ button {
 }
 
 #sins-footer {
-  font-size: 15px;
+  font-family: 'Rozha One', serif;
+  font-size: calc(0.9375rem + ((1vw - 3.2px) * 0.3125));
+  position: absolute;
+  bottom: 5%;
+  margin: 0 auto; /* @todo fix this so it centers the text*/
 }
 
 /* add in some media queries to make the text and bg image more responsive, right now font size is static. try to keep it on one line. also in mobile only show 1 image of the heart above text*/
@@ -89,10 +94,11 @@ body {
   background-color: black;
   text-align: center;
   height: 100vh;
+  position: relative;
 }
 
 .splash-bg {
-  background-image: url('heart-bg.gif');
+  background-image: url('images/heart-bg.gif');
   background-size: contain;
   height: 30vh;
 }
@@ -124,30 +130,13 @@ body {
   right: 20%;
 }
 
-#game {
+#game-space {
   margin: 10vh;
   height: 60vh;
-  flex-grow: 2;
-  display: flex;
-  flex-direction: row;
-}
-
-#birth {
-  transform: rotate(-90deg);
   position: absolute;
-  left: 0;
-  top: 40%;
+  top: 10%;
+  left: 5%;
 }
-
-#death {
-  transform: rotate(90deg);
-  position: absolute;
-  right: 0;
-  top: 50%;
-  display: none;   /*add JS that only displays this when you reach the end of the field to travel over*/
-}
-
-
 
 
 /* ---- components ---- */
@@ -162,6 +151,20 @@ button {
   background-color: #080808;
   border: none;
   margin: 30px 0 0 0;
+}
+
+.player {
+  width: 30px;
+  height: 30px;
+  background-color: greenyellow;
+  position: absolute;
+}
+
+@media (max-width: 1024px) {
+  .player {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 
