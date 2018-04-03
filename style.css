@@ -1,0 +1,169 @@
+/* ---- reset browser stylesheets---- */
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+
+
+
+/* ---- typography ---- */
+body {
+  color: white;
+}
+
+h1 {
+  color: white;
+  font-size: calc(1.875rem + ((1vw - 3.2px) * 1.875));
+  font-family: 'Permanent Marker', cursive;
+  margin: 0px;
+}
+
+h2 {
+  color: white;
+  font-size: calc(1.875rem + ((1vw - 3.2px) * 0.625));
+  font-family: 'Permanent Marker', cursive;
+  margin: 0px;
+}
+
+.sins-text {
+  font-family: 'Rozha One', serif;
+  font-size: calc(1.25rem + ((1vw - 3.2px) * 0.3125));
+}
+
+#destiny {
+  color: white;
+  font-size: calc(1.5625rem + ((1vw - 3.2px) * 0.3125));
+  font-family: 'Permanent Marker', cursive;
+}
+
+.reset {
+  font-size: calc(1.5625rem + ((1vw - 3.2px) * 0.3125));
+  font-family: 'Permanent Marker', cursive;
+}
+
+button {
+  color: white;
+  text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red, 0 0 40px red, 0 0 40px red, 0 0 40px red, 0 0 6px red;
+}
+
+#destiny:hover {
+  color: #fc9292;
+}
+
+.reset:hover {
+  color: #fc9292;
+}
+
+#pardons {
+  font-family: 'Rozha One', serif;
+  font-size: 20px;
+}
+
+#sins-footer {
+  font-size: 15px;
+}
+
+/* add in some media queries to make the text and bg image more responsive, right now font size is static. try to keep it on one line. also in mobile only show 1 image of the heart above text*/
+
+
+/* ---- layout ---- */
+
+body {
+  background-color: black;
+}
+
+.main-content {
+  padding: 50px;
+  background-color: black;
+  text-align: center;
+  height: 100vh;
+}
+
+.splash-bg {
+  background-image: url('heart-bg.gif');
+  background-size: contain;
+  height: 30vh;
+}
+
+.title-bg {
+  background-color: black;
+  padding: 30px;
+}
+
+#splash-img {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .splash-bg {
+    display: none;
+  }
+
+  #splash-img {
+    display: block;
+    margin: 0 auto;
+  }
+
+}
+
+#pardons {
+  position: absolute;
+  top: 0;
+  right: 20%;
+}
+
+#game {
+  margin: 10vh;
+  height: 60vh;
+  flex-grow: 2;
+  display: flex;
+  flex-direction: row;
+}
+
+#birth {
+  transform: rotate(-90deg);
+  position: absolute;
+  left: 0;
+  top: 40%;
+}
+
+#death {
+  transform: rotate(90deg);
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: none;   /*add JS that only displays this when you reach the end of the field to travel over*/
+}
+
+
+
+
+/* ---- components ---- */
+
+.main-content img {
+  width: 40%;
+  max-width: 500px;
+  min-width: 200px;
+}
+
+button {
+  background-color: #080808;
+  border: none;
+  margin: 30px 0 0 0;
+}
+
+
+
+
