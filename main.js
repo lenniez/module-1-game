@@ -2,6 +2,7 @@
 
 function main() {
   var game;
+
   // var player;
   var mainContentElement = document.getElementsByClassName("main-content")[0];
 

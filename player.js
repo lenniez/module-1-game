@@ -6,6 +6,11 @@ function Player (x, y, parentElement) {
   self.x = x;
   self.y = y; 
   self.pardonCount = 3;
+  self.xLeftBound = 80;
+  self.xRightBound = 600;
+  self.yTopBound = 100;
+  self.yBottomBound = 600;
+  
 
   self.parentElement = parentElement;
   self.playerElement = null;
@@ -37,22 +42,30 @@ Player.prototype.update = function () {
 
     switch (event.key) {
       case "ArrowDown":
-        self.y += 20;
+        if (self.y < self.yBottomBound) {
+          self.y += 20;
+        }
         console.log(self.y);
         self.draw();
         break;
       case "ArrowUp":
-        self.y -= 20;
+        if (self.y > self.yTopBound) {
+          self.y -= 20;
+        }
         console.log(self.y);
         self.draw();
         break;
       case "ArrowLeft":
-        self.x -= 20;
+        if (self.x > self.xLeftBound) {
+          self.x -= 20;
+        }
         console.log(self.x);
         self.draw();
         break;
       case "ArrowRight":
-        self.x += 20;
+        if (self.x < self.xRightBound) {
+          self.x += 20;
+        }
         console.log(self.x);
         self.draw();
         break;

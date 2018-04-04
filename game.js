@@ -52,6 +52,25 @@ Game.prototype.startGame = function () {
 
   self.player = new Player(30, 400, self.parentElement);
   self.player.build();
+
+  self.sin = new Sin (self.parentElement);
+  self.sin.build();
+  
+  self.sin = new Sin(self.parentElement);
+  self.sin.build();
+
+  self.sin = new Sin(self.parentElement);
+  self.sin.build();
+
+  self.sin = new Sin(self.parentElement);
+  self.sin.build();
+
+  self.sin = new Sin(self.parentElement);
+  self.sin.build();
+
+  self.sin = new Sin(self.parentElement);
+  self.sin.build();
+  
   self.playerMove();
   // call several new Sins (4-6) + build Sins
   // call several new Pardons (1-2) + build Pardons

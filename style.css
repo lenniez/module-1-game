@@ -93,8 +93,9 @@ body {
   padding: 50px;
   background-color: black;
   text-align: center;
-  height: 100vh;
+  width: 100vw;
   position: relative;
+  margin: 0 auto;
 }
 
 .splash-bg {
@@ -131,8 +132,8 @@ body {
 }
 
 #game-space {
-  margin: 10vh;
-  height: 60vh;
+  margin: 10vw;
+  height: 60vw;
   position: absolute;
   top: 10%;
   left: 5%;
@@ -157,7 +158,15 @@ button {
   width: 30px;
   height: 30px;
   background-color: greenyellow;
+  background-image: url('images/player3030.gif');
+  background-size: contain;
   position: absolute;
+}
+.sin {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  background-color: white;
 }
 
 @media (max-width: 1024px) {
@@ -165,7 +174,51 @@ button {
     width: 20px;
     height: 20px;
   }
+  .sin {
+    width: 30px;
+    height: 30px;
+  }
 }
+
+/* // @todo update the images once the functions work
+// classes for each sin  */
+
+.greed {
+  background-image: url('images/0.png');
+  background-size: contain;
+}
+
+.wrath {
+  background-image: url('images/1.png');
+  background-size: contain;
+}
+
+.lust {
+  background-image: url('images/2.png');
+  background-size: contain;
+}
+
+.envy {
+  background-image: url('images/3.png');
+  background-size: contain;
+}
+
+.gluttony {  
+  background-image: url('images/4.png');
+  background-size: contain;
+}
+
+.sloth {
+  background-image: url('images/5.png');
+  background-size: contain;
+}
+
+.pride {
+  background-image: url('images/6.png');
+  background-size: contain;
+}
+
+
 
 
 
