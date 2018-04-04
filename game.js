@@ -2,10 +2,12 @@
 
 function Game(parentElement) {
   var self = this;
-
+  
+  self.mainContentElement = document.getElementsByClassName("main-content")[0];
   self.parentElement = parentElement; 
   self.gameSpaceElement = null;
   self.pardonCountElement = null;
+  self.intervalID = null;
 
   self.player = null;
   self.sin = null;
@@ -16,7 +18,7 @@ function Game(parentElement) {
 // @todo understand what this does
 Game.prototype.onEnded = function(cb) {
   var self = this;
-  self.callback = cb;
+  self.callback = cb;      
 };
 
 
@@ -72,23 +74,45 @@ Game.prototype.startGame = function () {
   self.sin.build();
   
   self.playerMove();
-  // call several new Sins (4-6) + build Sins
+
+  function callUpdate() {
+    self.update();
+  }
+
+  self.intervalID = window.setInterval(callUpdate, 4000);
+
+ 
+
   // call several new Pardons (1-2) + build Pardons
 }
 
 
 //update Existing sins, pardons; add new sins, pardons; check for collisions; update pardons if needed
-// Game.prototype.update = function () {
-  // var self = this;
-  // Create new Sins 
+Game.prototype.update = function () {
+  var self = this;
+
+  // Create new Sins + build
+  self.sin = new Sin (self.mainContentElement);
+  self.sin.build();
+  
+  self.sin = new Sin(self.mainContentElement);
+  self.sin.build();
+
+  // Update existing sins' positions
+
+  sinArray.forEach(function (item) {
+    console.log(item);
+  });     //uses global sinArray var from sin.js file
 
   // Create new Pardons + build them
+
+  // Update existing Pardons
 
   // Call check Collisions function
 
   // Update PardonCount
 
-// }
+}
 
 //check for collisions and call in .update
 // Game.prototype.checkCollision = function () {
@@ -109,9 +133,6 @@ Game.prototype.startGame = function () {
 
 
 
+// End game when pardons = 0 and clear interval
 
-
-
-
-// @todo determine logic for generating new pardons
-
+// clearInterval(self.intervalID);

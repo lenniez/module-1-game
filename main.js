@@ -47,11 +47,6 @@ function main() {
 
   // build game screen
 
-  function gameEnded() {
-   gameScreenElement.remove();
-   buildGameOverScreen();
-  }
-
   function buildGameScreen () {
     game = new Game(mainContentElement);
     game.build();
@@ -61,6 +56,12 @@ function main() {
     });
   }
 
+  // Update game screen at intervals with new elements
+
+  function gameEnded() {
+    gameScreenElement.remove();
+    buildGameOverScreen();
+  }
 
   // build game over screen 
   var resetButtonElement;

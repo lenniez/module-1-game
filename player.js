@@ -77,11 +77,8 @@ Player.prototype.update = function () {
 
   });
 };
-// @todo add boundaries
 
-// Remove existing player from DOM, draw player with updated x,y in DOM
-
-// When it arrives at this function, for some reason the new x and y are not retained
+// Remove old player and draw new player
 Player.prototype.draw = function () {
   var self = this;
   
