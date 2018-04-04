@@ -5,7 +5,7 @@ function Game(parentElement) {
 
   self.parentElement = parentElement; 
   self.gameSpaceElement = null;
-  self.pardonsElement = null;
+  self.pardonCountElement = null;
 
   self.player = null;
   self.sin = null;
@@ -13,12 +13,19 @@ function Game(parentElement) {
 
 }
 
+// @todo understand what this does
+Game.prototype.onEnded = function(cb) {
+  var self = this;
+  self.callback = cb;
+};
+
+
 Game.prototype.build = function () {
   var self = this;
 
   self.gameScreenElement = createHtml(`
   <div>
-    <p id = "pardons">pardons remaining:</p>
+    <p>pardons remaining:<span id = "pardons"></span></p>
     <div id= "game-space">
     </div>
     <div id = "sins-footer">
@@ -29,38 +36,63 @@ Game.prototype.build = function () {
   self.parentElement.appendChild(self.gameScreenElement);
 
   self.gameSpaceElement = self.gameScreenElement.querySelector("#game-space");
-  self.pardonsElement = self.gameScreenElement.querySelector('#pardons');
-
-  self.player = new Player(30, 400, self.parentElement);
-  self.player.build();
-  self.player.updatePosition();
-
+  self.pardonCountElement = self.gameScreenElement.querySelector('#pardons');
 } 
 
 
+Game.prototype.playerMove = function() {
+  var self = this;
+
+  self.player.update();
+};
 
 
-// Game.prototype.startGame = function () {
+Game.prototype.startGame = function () {
+  var self = this;
 
-//   //call several new Sins
-//   //call several new Pardons (1-2)
+  self.player = new Player(30, 400, self.parentElement);
+  self.player.build();
+  self.playerMove();
+  // call several new Sins (4-6) + build Sins
+  // call several new Pardons (1-2) + build Pardons
+}
+
+
+//update Existing sins, pardons; add new sins, pardons; check for collisions; update pardons if needed
+// Game.prototype.update = function () {
+  // var self = this;
+  // Create new Sins 
+
+  // Create new Pardons + build them
+
+  // Call check Collisions function
+
+  // Update PardonCount
+
 // }
 
-/* -------- to be updated once constructors are ready
-Game.prototype.update = function () {
-
-}
-
-
-Game.prototype.draw = function () {
-
-}
+//check for collisions and call in .update
+// Game.prototype.checkCollision = function () {
+  // var self = this;
+// }
 
 
-Game.prototype.checkCollision = function () {
+// Draw all updated positions on the DOM
 
-}
+// Game.prototype.draw = function () {
+  // Build new Sins from .update
+
+  // Build new Pardons from .update
+
+  // Update PardonCountElement number
+
+// }
 
 
-// Need to determine logic for generating new pardons
-*/
+
+
+
+
+
+// @todo determine logic for generating new pardons
+

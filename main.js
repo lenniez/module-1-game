@@ -2,7 +2,7 @@
 
 function main() {
   var game;
-  var player;
+  // var player;
   var mainContentElement = document.getElementsByClassName("main-content")[0];
 
   // -- SPLASH SCREEN
@@ -46,26 +46,19 @@ function main() {
 
   // build game screen
 
+  function gameEnded() {
+   gameScreenElement.remove();
+   buildGameOverScreen();
+  }
+
   function buildGameScreen () {
     game = new Game(mainContentElement);
     game.build();
-    
-    /*
-      game.start();
-      game.onEnded(function() {
-        gameEnded();
-      });
-    */
-
-     // setTimeout(gameEnded, 3000); //REMOVE THIS ONCE GAME CONSTRUCTOR EXISTS AND GAME END FUNCTION EXISTS
+    game.startGame();
+    game.onEnded(function() {
+      gameEnded();
+    });
   }
-
-  function gameEnded() {
-    gameScreenElement.remove();
-    buildGameOverScreen();
-  }
-
-
 
 
   // build game over screen 
@@ -107,9 +100,8 @@ function main() {
 
   // start the app
 
-  buildSplashScreen ();
+  buildSplashScreen();
 
 }
 
 window.addEventListener("load", main);
-

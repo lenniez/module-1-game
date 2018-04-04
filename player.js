@@ -5,83 +5,80 @@ function Player (x, y, parentElement) {
 
   self.x = x;
   self.y = y; 
-  self.pardon = 3;
+  self.pardonCount = 3;
 
   self.parentElement = parentElement;
+  self.playerElement = null;
 
 }
 
-// How to build the player initially
+// Create player's HTML and link DOM
 
 Player.prototype.build = function () {
   var self = this;
 
   self.playerElement = createHtml(`<div class = "player"></div>`);
-
   self.parentElement.appendChild(self.playerElement);
 
+  // Set CSS x & y equal to constructor x & y
   self.playerElement.style.left = self.x + 'px';
   self.playerElement.style.top = self.y + 'px';
   
-}
+};
 
 
-// Update the player's position
+// Update the player's properties
 
-Player.prototype.updatePosition = function () {
+Player.prototype.update = function () {
   var self = this;
-  
 
   window.addEventListener("keydown", function (event) {
     console.log(event.key);
 
     switch (event.key) {
       case "ArrowDown":
-        self.y -= 100;
+        self.y += 20;
         console.log(self.y);
+        self.draw();
         break;
       case "ArrowUp":
-        self.y += 100;
+        self.y -= 20;
+        console.log(self.y);
+        self.draw();
         break;
       case "ArrowLeft":
-        self.x -= 100;
+        self.x -= 20;
+        console.log(self.x);
+        self.draw();
         break;
       case "ArrowRight":
-        self.x += 100;
+        self.x += 20;
+        console.log(self.x);
+        self.draw();
+        break;
+      default:
+        self.y = self.y;
+        self.x = self.x;
         break;
     }
-  
-  
+
   });
-  
-  self.draw(); // FIGURE OUT WHERE TO CALL THIS!
-}
+};
+// @todo add boundaries
 
+// Remove existing player from DOM, draw player with updated x,y in DOM
 
+// When it arrives at this function, for some reason the new x and y are not retained
 Player.prototype.draw = function () {
   var self = this;
-  // self.parentElement.remove(self.playerElement);
-
+  
+  self.playerElement.remove(0);
   self.build();
 
-}
-
-/*
-
-Player.prototype.updatePardons = function () {
-  var self = this;
-
-}
-
-// MVP two - vague AZ explanation of how you can add a class that will make the player look like she has been hit 
-Player.prototype.collision() {
-  self.hit = true;
-  sertTimeout(function () {\
-    self.hit = false;
-  })
-}
+};
 
 
+// Player.prototype.updatePardonCount = function () {
+//   var self = this;
 
-
-*/
+// };
