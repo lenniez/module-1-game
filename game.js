@@ -2,17 +2,21 @@
 
 function Game(parentElement) {
   var self = this;
-  
-  self.mainContentElement = document.getElementsByClassName("main-content")[0];
-  self.parentElement = parentElement; 
-  self.gameSpaceElement = null;
-  self.pardonCountElement = null;
-  self.intervalID = null;
 
   self.player = null;
-  self.sin = null;
-  self.pardons = null;
+  self.sins = [];
+  self.pardons = [];
+  self.pardonCount = null;
+  self.age = 0;
 
+  self.mainContentElement = document.getElementsByClassName("main-content")[0];
+  self.parentElement = parentElement;
+  self.gameScreenElement = null;
+  self.pardonCountElement = null;
+  self.ageElement = null;
+  self.intervalID1 = null;
+  self.intervalID2 = null;
+  self.intervalID3 = null;
 }
 
 // @todo understand what this does
@@ -21,14 +25,14 @@ Game.prototype.onEnded = function(cb) {
   self.callback = cb;      
 };
 
-
 Game.prototype.build = function () {
   var self = this;
 
   self.gameScreenElement = createHtml(`
   <div>
-    <p>pardons remaining:<span id = "pardons"></span></p>
-    <div id= "game-space">
+    <p id = "age"></p>
+    <p id = "pardonCount"></p>
+    <div id= "game-container">
     </div>
     <div id = "sins-footer">
       <p>anger - sloth - greed - pride - lust - envy - wrath - gluttony</p>
@@ -36,103 +40,135 @@ Game.prototype.build = function () {
   </div>`);
   
   self.parentElement.appendChild(self.gameScreenElement);
-
-  self.gameSpaceElement = self.gameScreenElement.querySelector("#game-space");
-  self.pardonCountElement = self.gameScreenElement.querySelector('#pardons');
-} 
+  self.pardonCountElement = self.gameScreenElement.querySelector('#pardonCount');
+  self.ageElement = self.gameScreenElement.querySelector("#age");
+};
 
 
 Game.prototype.playerMove = function() {
   var self = this;
-
   self.player.update();
 };
 
 
 Game.prototype.startGame = function () {
   var self = this;
+  this.pardonCount = 5;
+  self.pardonCountElement.innerText = "pardons remaining: " + this.pardonCount;
 
-  self.player = new Player(30, 400, self.parentElement);
+  self.player = new Player(30, 400, self.gameScreenElement);
   self.player.build();
+ 
+  for (var x = 0; x < 6; x++) {
+    self.sins.push(new Sin(self.gameScreenElement));
+    self.sins[x].build();
+  }
 
-  self.sin = new Sin (self.parentElement);
-  self.sin.build();
-  
-  self.sin = new Sin(self.parentElement);
-  self.sin.build();
-
-  self.sin = new Sin(self.parentElement);
-  self.sin.build();
-
-  self.sin = new Sin(self.parentElement);
-  self.sin.build();
-
-  self.sin = new Sin(self.parentElement);
-  self.sin.build();
-
-  self.sin = new Sin(self.parentElement);
-  self.sin.build();
+  // create new pardon
+  self.pardons.push(new Pardon(self.gameScreenElement));
+  self.pardons[self.pardons.length - 1].build();
   
   self.playerMove();
 
-  function callUpdate() {
-    self.update();
+  function updatePardonCount() {
+    self.checkCollisionsUpdatePardons();
   }
 
-  self.intervalID = window.setInterval(callUpdate, 4000);
+  function updateSins() {
+    self.sinUpdate();
+  }
 
- 
+  function updatePardons() {
+    self.pardonUpdate();
+  }
 
-  // call several new Pardons (1-2) + build Pardons
-}
+  self.intervalID1 = window.setInterval(updatePardonCount, 300);
+  self.intervalID2 = window.setInterval(updateSins, 800);
+  self.intervalID3 = window.setInterval(updatePardons, 10000);
+
+};
 
 
 //update Existing sins, pardons; add new sins, pardons; check for collisions; update pardons if needed
-Game.prototype.update = function () {
+Game.prototype.sinUpdate = function() {
   var self = this;
 
-  // Create new Sins + build
-  self.sin = new Sin (self.mainContentElement);
-  self.sin.build();
-  
-  self.sin = new Sin(self.mainContentElement);
-  self.sin.build();
+  // Create new Sin + build
+    self.sins.push(new Sin(self.gameScreenElement));
+    self.sins[self.sins.length - 1].build();
 
   // Update existing sins' positions
 
-  sinArray.forEach(function (item) {
-    console.log(item);
-  });     //uses global sinArray var from sin.js file
+  self.sins.forEach(function(item) {
+    item.update();
+  }); 
+
+};
+
+
+Game.prototype.pardonUpdate = function () {
+  var self = this;
 
   // Create new Pardons + build them
+  self.pardons.push(new Pardon(self.gameScreenElement));
+  self.pardons[self.pardons.length - 1].build();
 
   // Update existing Pardons
+  self.pardons.forEach(function(item) {
+    item.update();
+  });
 
-  // Call check Collisions function
+};
 
-  // Update PardonCount
+// Checks collisions and update PardonCount (value & DOM)
+Game.prototype.checkCollisionsUpdatePardons = function () {
+  var self = this;
 
-}
+  var playerRightEdge = self.player.x + self.player.width;
+  var playerLeftEdge = self.player.x;
+  var playerTopEdge = self.player.y;
+  var playerBottomEdge = self.player.y + self.player.height;
 
-//check for collisions and call in .update
-// Game.prototype.checkCollision = function () {
-  // var self = this;
-// }
+  self.sins.forEach(function (item, index){
+    var sinRightEdge = item.x + item.width;
+    var sinLeftEdge = item.x;
+    var sinTopEdge = item.y;
+    var sinBottomEdge = item.y + item.height;
+
+    if (sinRightEdge > playerLeftEdge && sinLeftEdge < playerRightEdge && sinTopEdge < playerBottomEdge && sinBottomEdge > playerTopEdge) {
+      self.pardonCount-= 1;
+      self.sins[index].sinElement.remove();
+      self.sins.splice(index, 1);
+    }
+  });
+
+  self.pardons.forEach(function (item, index){
+    var pardonRightEdge = item.x + item.width;
+    var pardonLeftEdge = item.x;
+    var pardonTopEdge = item.y;
+    var pardonBottomEdge = item.y + item.height;
+
+    if (pardonRightEdge > playerLeftEdge && pardonLeftEdge < playerRightEdge && pardonTopEdge < playerBottomEdge && pardonBottomEdge > playerTopEdge) {
+      self.pardonCount+= 1;
+      self.pardons[index].pardonElement.remove();
+      self.pardons.splice(index, 1);
+    }
+  });
+
+  // Update pardonCountElement & check for Game Over
+  self.pardonCountElement.innerText = "pardons remaining: " + this.pardonCount;
+
+  if (self.pardonCount <= 0) {
+    clearInterval(self.intervalID1);
+    clearInterval(self.intervalID2);
+    clearInterval(self.intervalID3);
+    self.callback();
+  };
+  
+};
 
 
-// Draw all updated positions on the DOM
-
-// Game.prototype.draw = function () {
-  // Build new Sins from .update
-
-  // Build new Pardons from .update
-
-  // Update PardonCountElement number
-
-// }
-
-
-
-// End game when pardons = 0 and clear interval
-
-// clearInterval(self.intervalID);
+Game.prototype.destroy = function() {
+  var self = this;
+  self.gameScreenElement.remove();
+};

@@ -5,6 +5,8 @@ function Player (x, y, parentElement) {
 
   self.x = x;
   self.y = y; 
+  self.width = 30;
+  self.height = 30; 
   self.pardonCount = 3;
   self.xLeftBound = 80;
   self.xRightBound = 600;
@@ -28,6 +30,8 @@ Player.prototype.build = function () {
   // Set CSS x & y equal to constructor x & y
   self.playerElement.style.left = self.x + 'px';
   self.playerElement.style.top = self.y + 'px';
+  self.playerElement.style.height = self.width + "px";
+  self.playerElement.style.width = self.height + "px";
   
 };
 
@@ -38,35 +42,30 @@ Player.prototype.update = function () {
   var self = this;
 
   window.addEventListener("keydown", function (event) {
-    console.log(event.key);
 
     switch (event.key) {
       case "ArrowDown":
         if (self.y < self.yBottomBound) {
           self.y += 20;
         }
-        console.log(self.y);
         self.draw();
         break;
       case "ArrowUp":
         if (self.y > self.yTopBound) {
           self.y -= 20;
         }
-        console.log(self.y);
         self.draw();
         break;
       case "ArrowLeft":
         if (self.x > self.xLeftBound) {
           self.x -= 20;
         }
-        console.log(self.x);
         self.draw();
         break;
       case "ArrowRight":
         if (self.x < self.xRightBound) {
           self.x += 20;
         }
-        console.log(self.x);
         self.draw();
         break;
       default:

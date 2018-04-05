@@ -1,7 +1,5 @@
 "use strict"
 
-var sinArray = []; // @todo Is it bad that this is global? YES!
-
 function Sin (parentElement) {
   var self = this;
 
@@ -10,6 +8,8 @@ function Sin (parentElement) {
   self.yTopBound = 100; // starting value to be adjusted - also needs to be adjusted in player.js
   self.yBottomBound = 600; // starting value to be adjusted - also needs to be adjusted in player.js
 
+  self.width = 40;
+  self.height = 40;
   self.x = (Math.floor(Math.random() * (self.xRightBound - self.xLeftBound) + self.xLeftBound)); // random value between left and right bounds
   self.y = (Math.floor(Math.random() * (self.yBottomBound - self.yTopBound) + self.yTopBound)); // random value between top and bottom bounds
   self.sinClassArray = ["greed", "wrath", "lust", "envy", "gluttony", "sloth", "pride"];
@@ -19,6 +19,8 @@ function Sin (parentElement) {
 
   self.parentElement = parentElement;
   self.sinElement = null;
+
+  self.speed = 10;
 
 }
 
@@ -36,51 +38,51 @@ Sin.prototype.build = function () {
   // Set CSS x & y equal to constructor x & y to update DOM position
   self.sinElement.style.left = self.x + 'px';
   self.sinElement.style.top = self.y + 'px';
+  self.sinElement.style.height = self.height + "px";
+  self.sinElement.style.width = self.width + "px";
 
-  // ---- LOGIC
-  //push new Sin object into sinArray to store values - x & y will be needed for position update and collisions
-  sinArray.push(self);
-  console.log(sinArray);
 };
 
-
+//uses random direction to determine movement of each sin
+//at gam boundary, sin is removed
 Sin.prototype.update = function () {
-  //switch function that uses direction to determine movement
-  //set boundaries - at boundary, sin is removed - MVP2
+  var self = this;
 
   switch (self.randomDirection) {
     case "down":
-      if (self.y <self.yBottomBound) {
-        self.y += 20;
+      if (self.y < self.yBottomBound) {
+        self.y += self.speed;
+        self.sinElement.style.top = self.y + "px";
+      } else {
+        self.sinElement.remove(0); // @todo Should also remove this from the array, not just DOM
       }
-      console.log(self.y);
-      self.draw();
       break;
     case "up":
-      if (self.y >self.yTopBound) {
-        self.y -= 20;
+      if (self.y > self.yTopBound) {
+        self.y -= self.speed;
+        self.sinElement.style.top = self.y + "px";
+      } else {
+        self.sinElement.remove(0);
       }
-      console.log(self.y);
-      self.draw();
       break;
     case "left":
-      if (self.x >self.xLeftBound) {
-        self.x -= 20;
+      if (self.x > self.xLeftBound) {
+        self.x -= self.speed;
+        self.sinElement.style.left = self.x + "px";
+      } else {
+        self.sinElement.remove(0);
       }
-      console.log(self.x);
-      self.draw();
       break;
     case "right":
-      if (self.x <self.xRightBound) {
-        self.x += 20;
+      if (self.x < self.xRightBound) {
+        self.x += self.speed;
+        self.sinElement.style.left = self.x + "px";
+      } else {
+        self.sinElement.remove(0);
       }
-      console.log(self.x);
-      self.draw();
       break;
-    }
+  }
 
-  self.sinElement.remove(0);
-  self.build();
-}
+};
 
 

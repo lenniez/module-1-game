@@ -93,7 +93,7 @@ body {
   padding: 50px;
   background-color: black;
   text-align: center;
-  width: 100vw;
+  height: 100vh;
   position: relative;
   margin: auto;
 }
@@ -125,13 +125,14 @@ body {
 
 }
 
-#pardons {
+#pardonCount {
+  font-size: 30px;
   position: absolute;
   top: 0;
   right: 20%;
 }
 
-#game-space {
+#game-container {
   margin: 10vw;
   height: 60vw;
   position: absolute;
@@ -155,19 +156,21 @@ button {
 }
 
 .player {
-  width: 30px;
-  height: 30px;
+  /* width: 30px;
+  height: 30px; */
   background-color: greenyellow;
   background-image: url('images/player3030.gif');
   background-size: contain;
   position: absolute;
 }
 .sin {
-  width: 40px;
-  height: 40px;
+  /* width: 40px;
+  height: 40px; */
   position: absolute;
   background-color: white;
 }
+
+/* figure out how to make this responsive after you finish collisions
 
 @media (max-width: 1024px) {
   .player {
@@ -178,43 +181,53 @@ button {
     width: 30px;
     height: 30px;
   }
-}
+} 
+
+*/
 
 /* // @todo update the images once the functions work
 // classes for each sin  */
 
 .greed {
-  background-image: url('images/0.png');
+  background-image: url('images/greed.jpg');
   background-size: contain;
 }
 
 .wrath {
-  background-image: url('images/1.png');
+  background-image: url('images/wrath.jpg');
   background-size: contain;
 }
 
 .lust {
-  background-image: url('images/2.png');
+  background-image: url('images/lust.png');
   background-size: contain;
 }
 
 .envy {
-  background-image: url('images/3.png');
+  background-image: url('images/envy.png');
   background-size: contain;
 }
 
 .gluttony {  
-  background-image: url('images/4.png');
+  background-image: url('images/gluttony.png');
   background-size: contain;
 }
 
 .sloth {
-  background-image: url('images/5.png');
+  background-image: url('images/sloth.jpg');
   background-size: contain;
 }
 
 .pride {
-  background-image: url('images/6.png');
+  background-image: url('images/pride.jpg');
+  background-size: contain;
+}
+
+.pardon {
+  /* width: 30px;
+  height: 30px; */
+  position: absolute;
+  background-image: url('images/pardon.jpg');
   background-size: contain;
 }
 

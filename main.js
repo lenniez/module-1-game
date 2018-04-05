@@ -59,7 +59,7 @@ function main() {
   // Update game screen at intervals with new elements
 
   function gameEnded() {
-    gameScreenElement.remove();
+    game.destroy();
     buildGameOverScreen();
   }
 
@@ -70,15 +70,14 @@ function main() {
   function buildGameOverScreen() {
     gameOverScreenElement = createHtml(`
       <div>
+        <!-- DIED FOR IT
         <img src = "images/gameover-wings.jpg">
         <h2>you lived a life of virtue... but you're still dead ;-)</h2>
         <button class="reset">live differently?</button>
-
-        <!-- DIED FOR IT
+        -->
         <img src="images/gameover-skull.jpg">
         <h2>you lived a life of sin and died for it</h2>
         <button class="reset">repent and try again?</button>
-        -->
       </div>`);
 
     mainContentElement.appendChild(gameOverScreenElement);
