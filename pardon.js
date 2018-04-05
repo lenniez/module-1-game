@@ -1,12 +1,12 @@
 "use strict"
 
-function Pardon (parentElement) {
+function Pardon(parentElement) {
   var self = this;
 
-  self.xLeftBound = 80; // starting value to be adjusted - also needs to be adjusted in player.js, sin.js, pardon.js
-  self.xRightBound = 600; // starting value to be adjusted - also needs to be adjusted in player.js, sin.js, pardon.js
-  self.yTopBound = 100; // starting value to be adjusted - also needs to be adjusted in player.js, sin.js, pardon.js
-  self.yBottomBound = 600; // starting value to be adjusted - also needs to be adjusted in player.js, sin.js, pardon.js
+  self.xLeftBound = document.body.clientWidth * 0.1; // starting value to be adjusted -  eeds to be adjusted in player.js, sin.js, pardon.js
+  self.xRightBound = document.body.clientWidth * 0.9; // starting value to be adjusted - needs to be adjusted in player.js, sin.js, pardon.js
+  self.yTopBound = 100; // starting value to be adjusted - needs to be adjusted in player.js, sin.js, pardon.js
+  self.yBottomBound = document.body.clientHeight * 0.9; // starting value to be adjusted - needs to be adjusted in player.js, sin.js, pardon.js
 
   self.x = Math.floor(Math.random() * (self.xRightBound - self.xLeftBound) + self.xLeftBound); // random value between left and right bounds
   self.y = Math.floor(Math.random() * (self.yBottomBound - self.yTopBound) + self.yTopBound); // random value between top and bottom bounds
@@ -18,7 +18,6 @@ function Pardon (parentElement) {
 
   self.parentElement = parentElement;
   self.pardonElement = null;
-
 }
 
 // create new Pardons & store values in pardonArray
@@ -42,7 +41,7 @@ Pardon.prototype.update = function() {
 
   switch (self.randomDirection) {
     case "down":
-      if (self.y < self.yBottomBound) {
+      if (self.y + self.speed + self.height < self.yBottomBound) {
         self.y += self.speed;
         self.pardonElement.style.top = self.y + "px";
       } else {
@@ -66,7 +65,7 @@ Pardon.prototype.update = function() {
       }
       break;
     case "right":
-      if (self.x < self.xRightBound) {
+      if (self.x + self.speed + self.width < self.xRightBound) {
         self.x += self.speed;
         self.pardonElement.style.left = self.x + "px";
       } else {

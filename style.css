@@ -13,6 +13,8 @@ html {
 body {
   margin: 0;
   padding: 0;
+  height: 100vh;
+  width: 100vw;
 }
 
 
@@ -72,16 +74,23 @@ button {
   font-size: 20px;
 }
 
+#age {
+  font-size: calc(1.25rem + ((1vw - 3.2px) * 0.3125));
+  font-family: 'Permanent Marker', cursive;
+}
+
+#pardonCount {
+  font-family: 'Permanent Marker', cursive;
+  font-size: calc(1.25rem + ((1vw - 3.2px) * 0.3125));
+}
+
 #sins-footer {
   font-family: 'Rozha One', serif;
   font-size: calc(0.9375rem + ((1vw - 3.2px) * 0.3125));
+  text-align: center; 
   position: absolute;
-  bottom: 5%;
-  margin: 0 auto; /* @todo fix this so it centers the text*/
+  bottom: 10%;
 }
-
-/* add in some media queries to make the text and bg image more responsive, right now font size is static. try to keep it on one line. also in mobile only show 1 image of the heart above text*/
-
 
 /* ---- layout ---- */
 
@@ -90,12 +99,18 @@ body {
 }
 
 .main-content {
-  padding: 50px;
   background-color: black;
   text-align: center;
-  height: 100vh;
+  width: 100vw;
   position: relative;
-  margin: auto;
+}
+
+.game-wrapper {
+  position: relative;
+}
+
+.game-over-wrapper {
+  margin-top: 15vh;
 }
 
 .splash-bg {
@@ -119,32 +134,41 @@ body {
   }
 
   #splash-img {
-    display: block;
+    display: inline-block;
+    width: 100vw;
     margin: 0 auto;
   }
+}
 
+#gamescreenheader {
+  padding: auto 15vw;
+}
+
+#age {
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 30vw;
 }
 
 #pardonCount {
-  font-size: 30px;
   position: absolute;
   top: 0;
-  right: 20%;
+  right: 15%;
+  width: 30vw;
 }
 
 #game-container {
-  margin: 10vw;
-  height: 60vw;
+  height: 95vh;
+  width: 100vw;
   position: absolute;
-  top: 10%;
-  left: 5%;
 }
 
 
 /* ---- components ---- */
 
 .main-content img {
-  width: 40%;
+  max-height: 40vh;
   max-width: 500px;
   min-width: 200px;
 }
@@ -156,50 +180,30 @@ button {
 }
 
 .player {
-  /* width: 30px;
-  height: 30px; */
-  background-color: greenyellow;
-  background-image: url('images/player3030.gif');
+  background-image: url('images/player.gif');
   background-size: contain;
   position: absolute;
 }
 .sin {
-  /* width: 40px;
-  height: 40px; */
   position: absolute;
-  background-color: white;
+  background-color: none;
 }
 
-/* figure out how to make this responsive after you finish collisions
 
-@media (max-width: 1024px) {
-  .player {
-    width: 20px;
-    height: 20px;
-  }
-  .sin {
-    width: 30px;
-    height: 30px;
-  }
-} 
-
-*/
-
-/* // @todo update the images once the functions work
-// classes for each sin  */
+/*  classes for each sin  */
 
 .greed {
-  background-image: url('images/greed.jpg');
+  background-image: url('images/greed.png');
   background-size: contain;
 }
 
 .wrath {
-  background-image: url('images/wrath.jpg');
+  background-image: url('images/wrath.png');
   background-size: contain;
 }
 
 .lust {
-  background-image: url('images/lust.png');
+  background-image: url('images/lust.gif');
   background-size: contain;
 }
 
@@ -214,12 +218,12 @@ button {
 }
 
 .sloth {
-  background-image: url('images/sloth.jpg');
+  background-image: url('images/sloth.png');
   background-size: contain;
 }
 
 .pride {
-  background-image: url('images/pride.jpg');
+  background-image: url('images/pride.png');
   background-size: contain;
 }
 
@@ -227,7 +231,7 @@ button {
   /* width: 30px;
   height: 30px; */
   position: absolute;
-  background-image: url('images/pardon.jpg');
+  background-image: url('images/pardon.png');
   background-size: contain;
 }
 

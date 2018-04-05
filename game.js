@@ -29,9 +29,11 @@ Game.prototype.build = function () {
   var self = this;
 
   self.gameScreenElement = createHtml(`
-  <div>
-    <p id = "age"></p>
-    <p id = "pardonCount"></p>
+  <div class = "game-wrapper">
+    <div id = "gamescreenheader">
+      <p id = "age">age:</p>
+      <p id = "pardonCount"></p>
+    </div>
     <div id= "game-container">
     </div>
     <div id = "sins-footer">
@@ -53,10 +55,10 @@ Game.prototype.playerMove = function() {
 
 Game.prototype.startGame = function () {
   var self = this;
-  this.pardonCount = 5;
+  this.pardonCount = 3;
   self.pardonCountElement.innerText = "pardons remaining: " + this.pardonCount;
 
-  self.player = new Player(30, 400, self.gameScreenElement);
+  self.player = new Player(20, 400, self.gameScreenElement);
   self.player.build();
  
   for (var x = 0; x < 6; x++) {
@@ -82,8 +84,8 @@ Game.prototype.startGame = function () {
     self.pardonUpdate();
   }
 
-  self.intervalID1 = window.setInterval(updatePardonCount, 300);
-  self.intervalID2 = window.setInterval(updateSins, 800);
+  self.intervalID1 = window.setInterval(updatePardonCount, 200);
+  self.intervalID2 = window.setInterval(updateSins, 300);
   self.intervalID3 = window.setInterval(updatePardons, 10000);
 
 };
@@ -156,7 +158,7 @@ Game.prototype.checkCollisionsUpdatePardons = function () {
   });
 
   // Update pardonCountElement & check for Game Over
-  self.pardonCountElement.innerText = "pardons remaining: " + this.pardonCount;
+  self.pardonCountElement.innerText = "pardons: " + this.pardonCount;
 
   if (self.pardonCount <= 0) {
     clearInterval(self.intervalID1);

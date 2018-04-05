@@ -3,10 +3,10 @@
 function Sin (parentElement) {
   var self = this;
 
-  self.xLeftBound = 80;  // starting value to be adjusted - also needs to be adjusted in player.js
-  self.xRightBound = 600; // starting value to be adjusted - also needs to be adjusted in player.js
-  self.yTopBound = 100; // starting value to be adjusted - also needs to be adjusted in player.js
-  self.yBottomBound = 600; // starting value to be adjusted - also needs to be adjusted in player.js
+  self.xLeftBound = document.body.clientWidth * 0.1;  // starting value to be adjusted - needs to be adjusted in player.js, sin.js, pardon.js
+  self.xRightBound = document.body.clientWidth * 0.9; // starting value to be adjusted - needs to be adjusted in player.js, sin.js, pardon.js
+  self.yTopBound = 100; // starting value to be adjusted - needs to be adjusted in player.js, sin.js, pardon.js
+  self.yBottomBound = document.body.clientHeight * 0.9; // starting value to be adjusted - needs to be adjusted in player.js, sin.js, pardon.js
 
   self.width = 40;
   self.height = 40;
@@ -20,7 +20,7 @@ function Sin (parentElement) {
   self.parentElement = parentElement;
   self.sinElement = null;
 
-  self.speed = 10;
+  self.speed = 3;
 
 }
 
@@ -50,11 +50,11 @@ Sin.prototype.update = function () {
 
   switch (self.randomDirection) {
     case "down":
-      if (self.y < self.yBottomBound) {
+      if (self.y + self.speed + self.height < self.yBottomBound) {
         self.y += self.speed;
         self.sinElement.style.top = self.y + "px";
       } else {
-        self.sinElement.remove(0); // @todo Should also remove this from the array, not just DOM
+        self.sinElement.remove(0); 
       }
       break;
     case "up":
@@ -74,7 +74,7 @@ Sin.prototype.update = function () {
       }
       break;
     case "right":
-      if (self.x < self.xRightBound) {
+      if (self.x + self.speed + self.width < self.xRightBound) {
         self.x += self.speed;
         self.sinElement.style.left = self.x + "px";
       } else {
