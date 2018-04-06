@@ -31,7 +31,7 @@ Game.prototype.build = function () {
   self.gameScreenElement = createHtml(`
   <div class = "game-wrapper">
     <div id = "gamescreenheader">
-      <p id = "age">age:</p>
+      <p id = "age"></p>
       <p id = "pardonCount"></p>
     </div>
     <div id= "game-container">
@@ -57,6 +57,7 @@ Game.prototype.startGame = function () {
   var self = this;
   this.pardonCount = 3;
   self.pardonCountElement.innerText = "pardons remaining: " + this.pardonCount;
+  self.checkTimeout();
 
   self.player = new Player(20, 400, self.gameScreenElement);
   self.player.build();
@@ -173,4 +174,18 @@ Game.prototype.checkCollisionsUpdatePardons = function () {
 Game.prototype.destroy = function() {
   var self = this;
   self.gameScreenElement.remove();
+};
+
+Game.prototype.checkTimeout = function () {
+  var self = this;
+
+  var age = 0;
+  var timeOut = setInterval(function() {
+    self.ageElement.innerHTML = "age: " + age;
+    (age++)*2;
+    if (age >= 100) {
+      self.callback();
+      clearInterval(timeOut);
+    }
+  }, 1000);
 };

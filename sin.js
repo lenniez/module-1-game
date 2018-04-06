@@ -3,10 +3,10 @@
 function Sin (parentElement) {
   var self = this;
 
-  self.xLeftBound = document.body.clientWidth * 0.1;  // starting value to be adjusted - needs to be adjusted in player.js, sin.js, pardon.js
-  self.xRightBound = document.body.clientWidth * 0.9; // starting value to be adjusted - needs to be adjusted in player.js, sin.js, pardon.js
-  self.yTopBound = 100; // starting value to be adjusted - needs to be adjusted in player.js, sin.js, pardon.js
-  self.yBottomBound = document.body.clientHeight * 0.9; // starting value to be adjusted - needs to be adjusted in player.js, sin.js, pardon.js
+  self.xLeftBound = document.body.clientWidth * 0.1;  // needs to be adjusted in player.js, sin.js, pardon.js
+  self.xRightBound = document.body.clientWidth * 0.9; // needs to be adjusted in player.js, sin.js, pardon.js
+  self.yTopBound = 100; // needs to be adjusted in player.js, sin.js, pardon.js
+  self.yBottomBound = document.body.clientHeight * 0.9; // needs to be adjusted in player.js, sin.js, pardon.js
 
   self.width = 40;
   self.height = 40;
