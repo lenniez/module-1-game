@@ -103,6 +103,7 @@ function main() {
   function handleResetClick() {
     destroyGameOverScreen();
     buildGameScreen();
+    music.play();
   }
 
   function destroyGameOverScreen() {
