@@ -12,7 +12,7 @@ function Pardon(parentElement) {
   self.y = Math.floor(Math.random() * (self.yBottomBound - self.yTopBound) + self.yTopBound); // random value between top and bottom bounds
   self.width = 30;
   self.height = 30;
-  self.speed = 15;
+  self.speed = SPEED * 5;
   self.directionArray = ["up", "down", "left", "right"];
   self.randomDirection = self.directionArray[Math.floor(Math.random() * self.directionArray.length)]; // pull random index in directionArray
 

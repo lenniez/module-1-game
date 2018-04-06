@@ -1,5 +1,5 @@
 "use strict"
-
+var SPEED = 2;
 function Game(parentElement) {
   var self = this;
 
@@ -8,15 +8,17 @@ function Game(parentElement) {
   self.pardons = [];
   self.pardonCount = null;
   self.age = 0;
+  self.timer = 0;
+  self.sinSound = new Audio("sounds/sin-whoosh.wav");
+  self.pardonSound = new Audio ("sounds/pardon-boop.wav");
 
   self.mainContentElement = document.getElementsByClassName("main-content")[0];
   self.parentElement = parentElement;
   self.gameScreenElement = null;
   self.pardonCountElement = null;
   self.ageElement = null;
-  self.intervalID1 = null;
-  self.intervalID2 = null;
-  self.intervalID3 = null;
+  self.intervalId = null;
+  self.timeOutId = null;
 }
 
 // @todo understand what this does
@@ -47,17 +49,11 @@ Game.prototype.build = function () {
 };
 
 
-Game.prototype.playerMove = function() {
-  var self = this;
-  self.player.update();
-};
-
-
 Game.prototype.startGame = function () {
   var self = this;
+  self.checkTimeout();
   this.pardonCount = 3;
   self.pardonCountElement.innerText = "pardons remaining: " + this.pardonCount;
-  self.checkTimeout();
 
   self.player = new Player(20, 400, self.gameScreenElement);
   self.player.build();
@@ -71,43 +67,66 @@ Game.prototype.startGame = function () {
   self.pardons.push(new Pardon(self.gameScreenElement));
   self.pardons[self.pardons.length - 1].build();
   
-  self.playerMove();
+  self.player.update(); 
+  self.intervalId = window.setInterval(function () {
+    self.update();
+  }, 17);
 
-  function updatePardonCount() {
+};
+  
+
+Game.prototype.update = function () {
+  var self = this; 
+  self.timer++;
+
+  if(self.timer % 2 === 0){
     self.checkCollisionsUpdatePardons();
-  }
+  } 
 
-  function updateSins() {
+  if (self.timer % 5 === 0 && self.sins.length < 25) {
+    self.sinCreate();
+  } 
+
+  if(self.timer % 3 === 0){
     self.sinUpdate();
   }
 
-  function updatePardons() {
-    self.pardonUpdate();
+  if (self.timer % 35 === 0) {
+    self.sinDirectionUpdate();
   }
 
-  self.intervalID1 = window.setInterval(updatePardonCount, 200);
-  self.intervalID2 = window.setInterval(updateSins, 300);
-  self.intervalID3 = window.setInterval(updatePardons, 10000);
-
+  if(self.timer % 100 === 0){
+    self.pardonUpdate();
+  }
 };
 
-
-//update Existing sins, pardons; add new sins, pardons; check for collisions; update pardons if needed
+ // Update existing sins' positions
 Game.prototype.sinUpdate = function() {
   var self = this;
-
-  // Create new Sin + build
-    self.sins.push(new Sin(self.gameScreenElement));
-    self.sins[self.sins.length - 1].build();
-
-  // Update existing sins' positions
-
-  self.sins.forEach(function(item) {
+ 
+  self.sins.forEach(function(item, index) {
     item.update();
+    if (item.dead === true) {
+      self.sins.splice(index, 1)
+    }
   }); 
-
 };
 
+Game.prototype.sinDirectionUpdate = function() {
+  var self = this;
+
+  self.sins.forEach(function(item, index) {
+    item.randomDirection = item.directionArray[Math.floor(Math.random() * item.directionArray.length)]; // pull random index in directionArray
+  });
+};
+
+// Create new Sin + build
+Game.prototype.sinCreate = function() {
+  var self = this;
+
+  self.sins.push(new Sin(self.gameScreenElement));
+  self.sins[self.sins.length - 1].build();
+};
 
 Game.prototype.pardonUpdate = function () {
   var self = this;
@@ -115,12 +134,12 @@ Game.prototype.pardonUpdate = function () {
   // Create new Pardons + build them
   self.pardons.push(new Pardon(self.gameScreenElement));
   self.pardons[self.pardons.length - 1].build();
-
+  
   // Update existing Pardons
   self.pardons.forEach(function(item) {
     item.update();
   });
-
+  
 };
 
 // Checks collisions and update PardonCount (value & DOM)
@@ -142,6 +161,7 @@ Game.prototype.checkCollisionsUpdatePardons = function () {
       self.pardonCount-= 1;
       self.sins[index].sinElement.remove();
       self.sins.splice(index, 1);
+      self.sinSound.play();
     }
   });
 
@@ -155,6 +175,7 @@ Game.prototype.checkCollisionsUpdatePardons = function () {
       self.pardonCount+= 1;
       self.pardons[index].pardonElement.remove();
       self.pardons.splice(index, 1);
+      self.pardonSound.play();
     }
   });
 
@@ -162,9 +183,8 @@ Game.prototype.checkCollisionsUpdatePardons = function () {
   self.pardonCountElement.innerText = "pardons: " + this.pardonCount;
 
   if (self.pardonCount <= 0) {
-    clearInterval(self.intervalID1);
-    clearInterval(self.intervalID2);
-    clearInterval(self.intervalID3);
+    clearInterval(self.intervalId);
+    clearInterval(self.timeOutId);
     self.callback();
   };
   
@@ -180,12 +200,13 @@ Game.prototype.checkTimeout = function () {
   var self = this;
 
   var age = 0;
-  var timeOut = setInterval(function() {
+  self.timeOutId = setInterval(function() {
     self.ageElement.innerHTML = "age: " + age;
     (age++)*2;
-    if (age >= 100) {
+    if (age >= 99) {
+      clearInterval(self.timeOutId);
+      clearInterval(self.intervalId);
       self.callback();
-      clearInterval(timeOut);
     }
   }, 1000);
 };

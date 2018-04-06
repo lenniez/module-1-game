@@ -2,6 +2,10 @@
 
 function main() {
   var game;
+  var music = new Audio ("sounds/bites-the-dust-queen.mp3");
+  var yeahSound = new Audio("sounds/yeah.mp3");
+  var ughSound = new Audio("sounds/ugh-lose.wav");
+  var woohooSound = new Audio("sounds/woohoo.mp3");
 
   // var player;
   var mainContentElement = document.getElementsByClassName("main-content")[0];
@@ -12,7 +16,7 @@ function main() {
   var startButtonElement;
 
   function buildSplashScreen() {
-    
+    music.play();
     splashScreenElement = createHtml(`
     <div>
       <div class = "splash-bg"></div>
@@ -38,6 +42,7 @@ function main() {
   function handleStartClick() {
     destroySplashScreen();
     buildGameScreen();
+    yeahSound.play(); 
   }
 
   function destroySplashScreen() {
@@ -60,6 +65,7 @@ function main() {
 
   function gameEnded() {
     game.destroy();
+    music.pause();
     buildGameOverScreen();
   }
 
@@ -68,21 +74,24 @@ function main() {
   var gameOverScreenElement;
 
   function buildGameOverScreen() {
-    gameOverScreenElement = createHtml(`
-      <div class = "game-over-wrapper">
-        <img src="images/gameover-skull.jpg">
-        <h2>you lived a life of sin and died for it</h2>
-        <button class="reset">repent and try again?</button>
-      </div>`);
-
-      if (game.pardonCount > 0) {
-        gameOverScreenElement.innerHTML = 
-        `<div class = "game-over-wrapper">
-          <img src = "images/gameover-wings.jpg">
-          <h2>you lived a life of virtue... but you're still dead ;-)</h2>
-          <button class="reset">live differently?</button>
-        </div>`;
-      } // FIGURE OUT IF THIS WILL CAUSE A WEIRD FLASH
+    var inner;
+    if (game.pardonCount > 0) {
+      inner = 
+      `<div class = "game-over-wrapper">
+      <img src = "images/gameover-wings.jpg">
+      <h2>you lived a life of virtue... but you're still dead ;-)</h2>
+      <button class="reset">live differently?</button>
+      </div>`;
+      woohooSound.play();
+    } else {
+      inner = `<div class = "game-over-wrapper">
+      <img src="images/gameover-skull.jpg">
+      <h2>you lived a life of sin and died for it</h2>
+      <button class="reset">repent and try again?</button>
+      </div>`;
+      ughSound.play();
+    } // FIGURE OUT IF THIS WILL CAUSE A WEIRD FLASH
+    gameOverScreenElement = createHtml(inner);
 
     mainContentElement.appendChild(gameOverScreenElement);
 
