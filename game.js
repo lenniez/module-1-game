@@ -95,7 +95,11 @@ Game.prototype.update = function () {
     self.sinDirectionUpdate();
   }
 
-  if(self.timer % 100 === 0){
+  if (self.timer % 100 === 0 && self.pardons.length < 6) {
+    self.pardonCreate();
+  }
+
+  if (self.timer % 100 === 0 ) {
     self.pardonUpdate();
   }
 };
@@ -128,18 +132,22 @@ Game.prototype.sinCreate = function() {
   self.sins[self.sins.length - 1].build();
 };
 
-Game.prototype.pardonUpdate = function () {
+// Create new Pardons + build them
+Game.prototype.pardonCreate = function () {
   var self = this;
 
-  // Create new Pardons + build them
   self.pardons.push(new Pardon(self.gameScreenElement));
   self.pardons[self.pardons.length - 1].build();
   
-  // Update existing Pardons
+};
+
+// Update existing Pardons
+Game.prototype.pardonUpdate = function() {
+  var self = this;
+
   self.pardons.forEach(function(item) {
     item.update();
   });
-  
 };
 
 // Checks collisions and update PardonCount (value & DOM)
